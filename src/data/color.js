@@ -1,5 +1,7 @@
 
 export const blue_100 = "#BBDEFB"
+export const blue_200 = "#90CAF9"
+export const blue_300 = "#64B5F6"
 export const blue_800 = "#1565C0"
 export const blue_900 = "#0D47A1"
 
