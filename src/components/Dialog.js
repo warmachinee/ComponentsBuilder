@@ -1,34 +1,35 @@
 import React, { useState, useEffect} from 'react';
-import {Desktop, Tablet, Mobile} from './ResponsiveDevice'
 import * as ic from './ic'
 import * as colors from '../data/color'
 import Modal from './Modal'
 
 export default function Dialog(props){
   function Body(props){
-    const { show, close } = props
-    const enable = {
+    const { show, close, children } = props
+    const [ fadeStyle, setFadeStyle ] = useState({opacity: '1',zIndex: '20'})
+    const bodyStyle = {
       position    : 'fixed',
       top         : '0',
       left        : '0',
       width       : '100%',
       height      : '100%',
       display     : 'block',
-      zIndex      : '20'
+      zIndex      : fadeStyle.zIndex,
+      opacity     : fadeStyle.opacity,
+      transition  : '.3s'
     }
-    const disable = {
-      position    : 'fixed',
-      top         : '0',
-      left        : '0',
-      width       : '100%',
-      height      : '100%',
-      display     : 'none'
+    function Fade(){
+      if(props.show){
+        setFadeStyle({opacity: '1',zIndex: '20'})
+      }else{
+        setFadeStyle({opacity: '0',zIndex: '-1'})
+      }
     }
-    const style = show ? enable : disable;
+    
     return(
-      <div style={style}>
+      <div style={bodyStyle}>
         <Backdrop close={close}/>
-        <Grid close={close}></Grid>
+        <Grid close={close}>{children}</Grid>
       </div>
     );
   }
@@ -36,27 +37,37 @@ export default function Dialog(props){
     const { close } = props
     const [ icColor, setIcColor ] = useState(colors.blue_200)
     const grid = {
+      boxSizing   : 'border-box',
       position    : 'fixed',
       background  : 'white',
-      width       : '50%',
-      height      : 'auto',
+      width       : '100%',
+      maxWidth    : '25rem',
+      maxHeight   : '100%',
       top         : '50%',
       left        : '50%',
       transform   : 'translate(-50%,-50%)',
+      overflow    : 'auto'
     }
     function Close(){
       const style={
-        float: 'right',
-        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'flex-end',
       }
       return(
-        <div style={style} onClick={close} onMouseEnter={()=>setIcColor(colors.blue_900)} onMouseLeave={()=>setIcColor(colors.blue_200)}>
-          <ic.close color={icColor} width="2rem" height="2rem"/>
+        <div style={style}>
+          <div style={{cursor: 'pointer'}} onClick={close}
+            onMouseEnter={()=>setIcColor(colors.blue_900)}
+            onMouseLeave={()=>setIcColor(colors.blue_200)}>
+            <ic.close color={icColor} width="2.5rem" height="2.5rem" />
+          </div>
         </div>
       );
     }
     return(
-      <div style={grid}><Close /></div>
+      <div style={grid}>
+        <Close />
+        {props.children}
+      </div>
     );
   }
   function Backdrop(props){
@@ -74,18 +85,8 @@ export default function Dialog(props){
     );
   }
   return(
-    <React.Fragment>
-      <Mobile>
-        <Body show={props.show} close={props.close}></Body>
-      </Mobile>
-
-      <Tablet>
-        Dialog
-      </Tablet>
-
-      <Desktop>
-        Dialog
-      </Desktop>
-    </React.Fragment>
+    <Body show={props.show} close={props.close}>
+      {props.children}
+    </Body>
   );
 }

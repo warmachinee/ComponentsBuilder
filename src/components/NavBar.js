@@ -20,6 +20,8 @@ export default function NavBar(props){
         background: navStyle.background,
         width: '100%',
         transition: '.6s ease-in-out',
+        boxShadow: '0 .25rem .75rem rgba(0, 0, 0, .9)',
+        zIndex: '10'
       },
       ul: {
         listStyleType: 'none',
@@ -125,7 +127,7 @@ export default function NavBar(props){
       );
     }
     function SignIn(props){
-      const { onClick, children } = props
+      const { signIn, children } = props
       const [ background, setBackground ] = useState('#2196f3')
       const [ buttonAction, setButtonAction ] = useState({color: colors.blue_900,background: 'white'})
       const buttonStyle = {
@@ -151,7 +153,7 @@ export default function NavBar(props){
             setButtonAction({color: colors.blue_900,background: 'white'})
           },150)
         })
-        onClick()
+        signIn()
       }
       return(
         <li style={style.liRight}>
@@ -163,7 +165,18 @@ export default function NavBar(props){
         </li>
       );
     }
-    const Expand = <div style={style.expand}>aaaa</div>;
+    const Expand = (
+      <div style={style.expand}>
+        <p style={{color: 'white'}}>Item</p>
+        <p style={{color: 'white'}}>Item</p>
+        <p style={{color: 'white'}}>Item</p>
+        <p style={{color: 'white'}}>Item</p>
+        <p style={{color: 'white'}}>Item</p>
+        <p style={{color: 'white'}}>Item</p>
+        <p style={{color: 'white'}}>Item</p>
+        <p style={{color: 'white'}}>Item</p>
+      </div>
+    );
     function HandleLogoClick(){
       console.log('Logo Clicked');
     }
@@ -175,13 +188,13 @@ export default function NavBar(props){
       }
     }
     function Pos(){
-      if(window.scrollY > windowScrollY){
+      if(window.scrollY > 1080){
         setNavPosition({position: 'fixed',top: '0'})
       }else{
         setNavPosition({position: 'sticky',top: '0'})
       }
       if(window.scrollY > windowScrollY){
-        setNavStyle({opacity: '.93',background: colors.blue_900})
+        setNavStyle({opacity: '.8',background: colors.blue_900})
       }else{
         setNavStyle({opacity: '1',background: colors.blue_900})
       }
@@ -196,7 +209,7 @@ export default function NavBar(props){
       return ()=>{
         window.removeEventListener("scroll",Pos)
       }
-    },[ navPosition, navStyle ])
+    },[ navStyle, navPosition ])
 
     return(
       <React.Fragment>
@@ -204,7 +217,7 @@ export default function NavBar(props){
           <ul style={style.ul}>
             <Menu onClick={()=>HandleExpand()} />
             <Logo onClick={()=>HandleLogoClick()} />
-            <SignIn onClick={()=>console.log('Sign in')}>Sign in</SignIn>
+            <SignIn signIn={props.signIn}>Sign in</SignIn>
           </ul>
         </nav>
         {Expand}
@@ -215,15 +228,15 @@ export default function NavBar(props){
   return(
     <React.Fragment>
       <Mobile>
-        <Nav screenType="mobile"/>
+        <Nav screenType="mobile" signIn={props.signIn}/>
       </Mobile>
 
       <Tablet>
-        <Nav screenType="tablet"/>
+        <Nav screenType="tablet" signIn={props.signIn}/>
       </Tablet>
 
       <Desktop>
-        <Nav screenType="desktop"/>
+        <Nav screenType="desktop" signIn={props.signIn}/>
       </Desktop>
     </React.Fragment>
   );
