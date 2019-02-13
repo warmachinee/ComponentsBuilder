@@ -31,7 +31,7 @@
 .showing-fade {
   opacity: 1;
   z-index: 2;
-  animation-duration: 1s;
+  animation-duration: 1.5s;
   animation-name: slide-fade;
 }
 
@@ -156,6 +156,7 @@
 }
 
 .show-index.is-dot {
+  margin: 0 0 3rem 0;
   color: #fff;
   position: absolute;
   bottom: 0;
@@ -164,12 +165,13 @@
   font-size: 28px;
   font-family: 'Slabo 27px', serif;
   display: flex;
+  cursor: pointer;
 }
 
 .show-index.is-dot .dot {
-  width: 10px;
-  height: 10px;
-  margin: 0 3px 3rem 3px;
+  width: 12px;
+  height: 12px;
+  margin: 4px;
   background-color: white;
   border-radius: 50%;
   opacity: 0.5;

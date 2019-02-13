@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Arrows from './Arrows.js';
 import './Slideshow.css';
 
-class Slideshow extends Component {
+class SlideShow extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,7 @@ class Slideshow extends Component {
       effect: props.effect,
       autoplay: props.autoplay,
       enableKeyboard: props.enableKeyboard,
-      slides: props.slides.length > 0 ? props.slides : props.children
+      slides: props.slides.length > 0 ? props.slides : null
     };
 
     this.runSlideShow = this.runSlideShow.bind(this);
@@ -118,6 +118,7 @@ class Slideshow extends Component {
       slideShowSlides = slides.map((slide, i) => {
         return (
           <li
+            onLoad={()=>console.log('loaded')}
             className={`slide ${effect} ${
               this.state.currentSlide === i ? 'showing-' + slideEffect : ''
             }`}
@@ -135,7 +136,7 @@ class Slideshow extends Component {
             }`}
             key={i}
           >
-            {slide}
+            {slides}
           </li>
         );
       });
@@ -143,7 +144,8 @@ class Slideshow extends Component {
 
     if (useDotIndex) {
       slideShowIndex = (
-        <div className="show-index is-dot">
+        <div className="show-index is-dot"
+          style={{transform: `translateX(${-(slides.length/2)*12-(slides.length/2)*4}px)`}}>
           {slides.map((slide, i) => {
             return (
               <span
@@ -151,6 +153,7 @@ class Slideshow extends Component {
                   this.state.currentSlide === i ? 'is-active' : ''
                 }`}
                 key={`dot${i}`}
+                onClick={()=>this.setState({currentSlide: i})}
               />
             );
           })}
@@ -189,7 +192,7 @@ class Slideshow extends Component {
   }
 }
 
-Slideshow.defaultProps = {
+SlideShow.defaultProps = {
   showIndex: false,
   showArrows: true,
   autoplay: true,
@@ -203,4 +206,4 @@ Slideshow.defaultProps = {
   width: '100%'
 };
 
-export default Slideshow;
+export default SlideShow;

@@ -267,3 +267,18 @@ export const Box = () =>{
     </div>
   )
 }
+export const BoxBlank = () =>{
+  return(
+    <>
+      <Desktop>
+        <div style={{width: '100%',height: window.innerHeight-72}} />
+      </Desktop>
+      <Tablet>
+        <div style={{width: '100%',height: window.innerHeight*.8}} />
+      </Tablet>
+      <Mobile>
+        <div style={{width: '100%',height: window.innerHeight*.6}} />
+      </Mobile>
+    </>
+  )
+}
