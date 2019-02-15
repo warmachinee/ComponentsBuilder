@@ -6,6 +6,7 @@ class SlideShow extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loadedImg: 0,
       currentSlide: props.defaultIndex,
       slideInterval: props.slideInterval,
       showIndex: props.showIndex,
@@ -14,7 +15,8 @@ class SlideShow extends Component {
       effect: props.effect,
       autoplay: props.autoplay,
       enableKeyboard: props.enableKeyboard,
-      slides: props.slides.length > 0 ? props.slides : null
+      slides: props.slides.length > 0 ? props.slides : null,
+      dataFromFetch: props.dataFromFetch
     };
 
     this.runSlideShow = this.runSlideShow.bind(this);
@@ -23,6 +25,7 @@ class SlideShow extends Component {
     this.increaseCount = this.increaseCount.bind(this);
     this.decreaseCount = this.decreaseCount.bind(this);
     this.handleKeyboard = this.handleKeyboard.bind(this);
+
   }
 
   componentDidMount() {
@@ -106,9 +109,16 @@ class SlideShow extends Component {
       currentSlide
     });
   }
-
+  testLoaded=()=>{
+    this.setState((prev)=>{
+      return {loadedImg: prev.loadedImg+1}
+    })
+  }
+  slideDetail = (i) =>{
+    this.props.clickDetail(i)
+  }
   render() {
-    const { slides, showIndex, useDotIndex, effect, showArrows } = this.state;
+    const { slides, showIndex, useDotIndex, effect, showArrows, dataFromFetch } = this.state;
 
     let slideEffect = effect === undefined ? 'fade' : effect;
     let slideShowSlides;
@@ -117,14 +127,21 @@ class SlideShow extends Component {
     if (!this.props.children) {
       slideShowSlides = slides.map((slide, i) => {
         return (
-          <li
-            onLoad={()=>console.log('loaded')}
-            className={`slide ${effect} ${
-              this.state.currentSlide === i ? 'showing-' + slideEffect : ''
-            }`}
-            key={i}
-            style={{ backgroundImage: `url(${slide})` }}
-          />
+          <React.Fragment>
+            <img
+              onLoad={()=>this.testLoaded()}
+              onClick={()=>this.slideDetail(i)}
+              className={`slide ${effect} ${
+                this.state.currentSlide === i ? 'showing-' + slideEffect : ''
+              }`}
+              key={i}
+              src={slide}/>
+            <p
+              style={this.state.currentSlide === i ? {opacity: '.6',zIndex: '9',display: 'inline'}:null}
+              className={`slideTitle`}>
+              { (dataFromFetch)? dataFromFetch.fieldname[i] : null }
+            </p>
+          </React.Fragment>
         );
       });
     } else {
@@ -170,14 +187,14 @@ class SlideShow extends Component {
     return (
       <div
         style={{
-          position: 'absolute',
           height: this.props.height || '100%',
-          width: this.props.width || '100%'
+          width: this.props.width || '100%',
+          margin: '3% 2.5% 3% 2.5%',
+          boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)'
         }}
       >
         <div className="slideshow-container">
           <ul className="slides">{slideShowSlides}</ul>
-
           {showArrows && (
             <Arrows
               decreaseCount={this.decreaseCount}

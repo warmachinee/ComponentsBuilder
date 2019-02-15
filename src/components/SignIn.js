@@ -5,7 +5,8 @@ import Dialog from './Dialog'
 function SignInForm(){
   return(
     <React.Fragment>
-      <p style={{textAlign: 'center'}}>Sign in</p>
+      <p style={{textAlign: 'center'}}>Accound system coming soon ....</p>
+      <div style={{width: '100%',height: '10rem'}}></div>
     </React.Fragment>
   );
 }
@@ -14,7 +15,7 @@ function SignIn(props){
     <React.Fragment>
       <Mobile>
         <Dialog show={props.show} close={props.close}>
-          Mobile
+          <SignInForm />
         </Dialog>
       </Mobile>
       <Tablet>

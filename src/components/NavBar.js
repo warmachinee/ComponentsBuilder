@@ -8,9 +8,9 @@ export default function NavBar(props){
   function Nav(props){
     const [ screenType, setScreenType ] = useState(props.screenType)
     const [ windowScrollY, setWindowScrollY ] = useState(null)
-    const [ navStyle, setNavStyle ] = useState({opacity: '1',background: '#0D47A1'})
+    const [ navStyle, setNavStyle ] = useState({opacity: '1',background: colors.blue_500})
     const [ navPosition, setNavPosition ] = useState({position: 'sticky',top: '0'})
-    const [ expand, setExpand ] = useState({height: '0px',minHeight: '0px',opacity: '0',state: false})
+    const [ expand, setExpand ] = useState({height: '0px',minHeight: '0px',opacity: '0',state: false,display: 'none'})
     const style = {
       nav: {
         position: navPosition.position,
@@ -20,8 +20,9 @@ export default function NavBar(props){
         background: navStyle.background,
         width: '100%',
         transition: '.6s ease-in-out',
-        boxShadow: '0 .25rem .75rem rgba(0, 0, 0, .9)',
-        zIndex: '10'
+        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+        zIndex: '10',
+        minWidth: '20rem'
       },
       ul: {
         listStyleType: 'none',
@@ -46,6 +47,7 @@ export default function NavBar(props){
         transition: '.6s ease-in-out',
       },
       expand: {
+        zIndex: '10',
         width: '100%',
         height: expand.height,
         minHeight: expand.minHeight,
@@ -53,7 +55,7 @@ export default function NavBar(props){
         transition: '.2s ease-in-out',
         position: 'fixed',
         top: (screenType === 'mobile')? '4rem': '4.5rem',
-        opacity: expand.opacity,
+        opacity: expand.opacity
       }
     }
     function Menu(props){
@@ -133,7 +135,7 @@ export default function NavBar(props){
       const buttonStyle = {
         display: 'block',
         padding: (screenType === 'mobile')? '.425rem 1.25rem': '.5rem 1.5rem',
-        margin: (screenType === 'mobile')? '1rem': '1.175rem 1.5rem',
+        margin: (screenType === 'mobile')? '1rem': '1.175rem 2.5rem',
         color: buttonAction.color,
         border: 'none',
         background: buttonAction.background,
@@ -167,14 +169,13 @@ export default function NavBar(props){
     }
     const Expand = (
       <div style={style.expand}>
-        <p style={{color: 'white'}}>Item</p>
-        <p style={{color: 'white'}}>Item</p>
-        <p style={{color: 'white'}}>Item</p>
-        <p style={{color: 'white'}}>Item</p>
-        <p style={{color: 'white'}}>Item</p>
-        <p style={{color: 'white'}}>Item</p>
-        <p style={{color: 'white'}}>Item</p>
-        <p style={{color: 'white'}}>Item</p>
+        <p style={{color: 'white',display: expand.display}}>Item</p>
+        <p style={{color: 'white',display: expand.display}}>Item</p>
+        <p style={{color: 'white',display: expand.display}}>Item</p>
+        <p style={{color: 'white',display: expand.display}}>Item</p>
+        <p style={{color: 'white',display: expand.display}}>Item</p>
+        <p style={{color: 'white',display: expand.display}}>Item</p>
+        <p style={{color: 'white',display: expand.display}}>Item</p>
       </div>
     );
     function HandleLogoClick(){
@@ -182,9 +183,9 @@ export default function NavBar(props){
     }
     function HandleExpand(){
       if(expand.state){
-        setExpand({height: '0px',minHeight: '0px',opacity: '0',state: false})
+        setExpand({height: '0px',minHeight: '0px',opacity: '0',state: false, display: 'none'})
       }else{
-        setExpand({height: 'auto',minHeight: '30%',opacity: '.9',state: true})
+        setExpand({height: 'auto',minHeight: '30%',opacity: '.95',state: true})
       }
     }
     function Pos(){
@@ -194,9 +195,9 @@ export default function NavBar(props){
         setNavPosition({position: 'sticky',top: '0'})
       }
       if(window.scrollY > windowScrollY){
-        setNavStyle({opacity: '.8',background: colors.blue_900})
+        setNavStyle({opacity: '.8',background: colors.blue_500})
       }else{
-        setNavStyle({opacity: '1',background: colors.blue_900})
+        setNavStyle({opacity: '1',background: colors.blue_500})
       }
     }
     useEffect(()=>{
@@ -274,10 +275,10 @@ export const BoxBlank = () =>{
         <div style={{width: '100%',height: window.innerHeight-72}} />
       </Desktop>
       <Tablet>
-        <div style={{width: '100%',height: window.innerHeight*.8}} />
+        <div style={{width: '100%',height: window.innerHeight*.7+64}} />
       </Tablet>
       <Mobile>
-        <div style={{width: '100%',height: window.innerHeight*.6}} />
+        <div style={{width: '100%',height: window.innerHeight*.5+64}} />
       </Mobile>
     </>
   )

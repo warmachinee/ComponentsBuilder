@@ -25,7 +25,7 @@ export default function Dialog(props){
         setFadeStyle({opacity: '0',zIndex: '-1'})
       }
     }
-    
+
     return(
       <div style={bodyStyle}>
         <Backdrop close={close}/>
@@ -40,8 +40,9 @@ export default function Dialog(props){
       boxSizing   : 'border-box',
       position    : 'fixed',
       background  : 'white',
-      width       : '100%',
-      maxWidth    : '25rem',
+      width       : '80%',
+      minWidth    : '20rem',
+      maxWidth    : '30rem',
       maxHeight   : '100%',
       top         : '50%',
       left        : '50%',
