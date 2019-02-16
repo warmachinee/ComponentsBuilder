@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Arrows from './Arrows.js';
 import './Slideshow.css';
+import ic_promote from '../ic/promote.png'
 
 class SlideShow extends Component {
   constructor(props) {
@@ -189,7 +190,7 @@ class SlideShow extends Component {
         style={{
           height: this.props.height || '100%',
           width: this.props.width || '100%',
-          margin: '3% 2.5% 3% 2.5%',
+          margin: '3% 10% 5% 10%',
           boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)'
         }}
       >
@@ -201,7 +202,9 @@ class SlideShow extends Component {
               increaseCount={this.increaseCount}
             />
           )}
-
+          <img
+            style={{position: 'absolute',top: '3rem',margin: '0 15%',opacity: '.7',width: '70%',zIndex: '9'}}
+            src={ic_promote}/>
           {showIndex && slideShowIndex}
         </div>
       </div>

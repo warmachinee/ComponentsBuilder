@@ -31,7 +31,7 @@ class App extends Component {
     this.setState((prev)=>{return {modalState: !prev.modalState}})
   }
   async fetchUrl(){
-    const res = await fetch('http://pds.in.th/php/showSNT.php')
+    const res = await fetch('http://thai-pga.com/php/showSNT.php')
     const json = await res.json()
     await new Promise((resolve)=>{
       resolve()
@@ -62,9 +62,9 @@ class App extends Component {
       dataFromFetch, detailPageState, detailIndex
     } = this.state
     const { setModalState, clickDetail } = this
-    const Slide = ( dataFromFetch?
+    const Slide = ( !dataFromFetch?
       <SlideShow
-        clickDetail={clickDetail}
+        clickDetail={null&&clickDetail}
         dataFromFetch={dataFromFetch}
         showIndex
         showArrows
@@ -76,7 +76,7 @@ class App extends Component {
         slides={imageSlide}
         effect={'fade'}
         height={slideshowHeight}
-        width={'95%'} />
+        width={'80%'} />
       :<p>Loading ...</p>);
     const MainPage = (
       <React.Fragment>

@@ -168,7 +168,7 @@ function MatchList(props){
       boxSizing: 'border-box',
       border: `4px solid ${colors.blue_grey_700}`,
       borderRadius: '4px',
-      margin: '2rem'
+      margin: '2rem 2rem 20% 2rem'
     },
     matchListTitle: {
       color: colors.blue_grey_700,
